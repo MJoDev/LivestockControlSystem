@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/list">Sistema de control</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        	<li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Ganado
+	          </a>
+	          <ul class="dropdown-menu">
+	            <li><a class="dropdown-item" routerLink="/list">Total</a></li>
+	            <li><a class="dropdown-item" routerLink="/adultos">Adultos</a></li>
+	            <li><a class="dropdown-item" routerLink="/becerros">Becerros</a></li>
+	          </ul>
+	        </li>
+          <a class="nav-link" routerLink="/productos">Insumos</a>
+        </div>
+      </div>
+    </div>
+</nav>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-lg-6 offset-lg-3">
+			<div class="card">
+				<div class="card-body text-center">
+					<span class="mb-5">Editar producto</span>
+					<form class="row gx-3 gy-2 align-items-center" [formGroup]="productForm" (ngSubmit)="addProduct()">
+						<div>
+							<div class="col mt-3">
+								<p class="text-start mb-0">ID del producto</p>
+								<input type="text" maxlength="5"  formControlName="productID" class="form-control form-control-lg" placeholder="ID del producto">
+							</div>
+							<div class="col mt-3">
+									<p class="text-start mb-0">Nombre del producto</p>
+							  	<input type="text" formControlName="product" class="form-control form-control-lg" placeholder="Producto">
+							</div>
+							<div class="text-danger text-start px-2" *ngIf="productForm.get('product')?.hasError('required') && productForm.get('product')?.touched">El producto es necesario</div>
+							<div class="col mt-3">
+									<p class="text-start mb-0">Cantidad del producto</p>
+							    <input type="number" formControlName="stock" class="form-control form-control-lg" placeholder="Cantidad disponible">
+							</div>	
+							<div class="text-danger text-start px-2" *ngIf="productForm.get('stock')?.hasError('required') && productForm.get('stock')?.touched">La cantidad de producto disponible es necesaria</div>
+							<div class="col mt-3">
+									<p class="text-start mb-0">Alerta</p>
+							    <input type="number" formControlName="alerta" class="form-control form-control-lg" placeholder="Establecer alerta para reabastecer">
+							</div>	
+							 <div class="col-auto">
+							  	<p class="text-start mb-1">Tipo</p>
+							    <select class="form-select" aria-label="Default select example" formControlName="tipo">
+								  <option value="Litros">Litros</option>
+								  <option value="Kilos">Kilos</option>
+								  <option value="No especificado">No especificado</option>
+								</select>
+								<div class="text-danger text-start px-2" *ngIf="productForm.get('tipo')?.hasError('required') && productForm.get('tipo')?.touched">El tipo de producto es necesario</div>
+							  </div>
+							<div class="col mt-3 text-start">
+								  <label for="descripcion" class="form-label">Descripcion</label>
+								  <textarea class="form-control" id="descripcion" rows="4" formControlName="descripcion"></textarea>
+							</div>
+						</div>
+
+						<div class="col-auto mt-4 mb-3">
+								<button type="submit" [disabled]="productForm.invalid" class="btn btn-success float-start">Editar</button>
+						</div>
+						<div class="col-auto mt-4 mb-3">
+								<button class="btn btn-secondary float-end" routerLink='/productos'>Volver</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/list">Sistema de control</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        	<li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Ganado
+	          </a>
+	          <ul class="dropdown-menu">
+	            <li><a class="dropdown-item" routerLink="/list">Total</a></li>
+	            <li><a class="dropdown-item" routerLink="/adultos">Adultos</a></li>
+	            <li><a class="dropdown-item" routerLink="/becerros">Becerros</a></li>
+	          </ul>
+	        </li>
+          <a class="nav-link" routerLink="/productos">Insumos</a>
+        </div>
+      </div>
+    </div>
+</nav>
+<div class="container-fluid mt-5">
+	<div class="row">
+		<div class="col-lg-8 offset-lg-2">
+			<div class="card">
+				<div class="card-body text-center">
+					<span>Lista de Becerros</span> 
+					<button class="btn btn-success float-end mb-2" routerLink="/create">Nuevo</button>
+					<input class="form-control me-2" type="text" placeholder="Buscar por ID" [(ngModel)]="filtroID" aria-label="Search"> 
+					<table class="table table-dark table-striped table-hover mt-3" *ngIf="listGanado.length > 0">
+					 	<thead>
+					 		<tr>
+					 			<th>#</th>
+					 			<th>Edad</th>
+					 			<th>Fecha de ingreso</th>
+					 			<th>Fecha de Vacunacion</th>
+					 			<th>Genero</th>
+					 			<th>Destetado</th>
+					 			<th>Descripcion</th>
+					 			<th>Editar/Eliminar</th>	
+					 		</tr>
+					 	</thead>
+					 	<tbody>
+					 		<tr *ngFor="let ganado of listGanado | filtroGanado:filtroID">
+					 			<th>{{ ganado.ganadoID }}</th>
+					 			<td>{{ calcularEdad(ganado.fechaDeNacimiento) }}</td>
+					 			<td>{{ ganado.fechaDeIngreso | date:'yyyy-MM-dd' }}</td>
+					 			<td>{{ ganado.fechaDeVacunacion | date:'yyyy-MM-dd' }}</td>
+					 			<td>{{ ganado.genero }}</td>
+					 			<td>{{ ganado.destetado }}</td>
+					 			<td>
+							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
+								</td>
+					 			<td>
+					 			<i [routerLink]="['/editar-ganado', ganado._id]" class="mx-2 fa-solid fa-pen-to-square"></i>
+					 			<i (click)="eliminarGanado(ganado._id)" class="fa-solid fa-trash"></i>
+					 			</td>
+					 		</tr>
+					 	</tbody>
+					</table>
+					<h5 style="text-align: start; margin-top: 10px" *ngIf="listGanado.length == 0">No hay productos para mostrar</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

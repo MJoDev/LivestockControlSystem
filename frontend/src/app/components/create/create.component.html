@@ -1,0 +1,147 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/list">Sistema de control</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        	<li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Ganado
+	          </a>
+	          <ul class="dropdown-menu">
+	            <li><a class="dropdown-item" routerLink="/list">Total</a></li>
+	            <li><a class="dropdown-item" routerLink="/adultos">Adultos</a></li>
+	            <li><a class="dropdown-item" routerLink="/becerros">Becerros</a></li>
+	          </ul>
+	        </li>
+          <a class="nav-link" routerLink="/productos">Insumos</a>
+        </div>
+      </div>
+    </div>
+</nav>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-lg-6 offset-lg-3">
+			<div class="card">
+				<div class="card-body text-center">
+					<span class="mb-5">{{ titulo }}</span>
+					<div class="d-grid gap-2 d-md-block mx-auto mb-2 mt-2">
+							<button type="button" class="btn btn-outline-dark me-md-2" (click)="setTipo()">Insumo</button>
+							<button type="button" class="btn btn-outline-dark" (click)="quitarTipo()">Ganado</button>
+					</div>
+					<form class="row gx-3 gy-2 align-items-center" [formGroup]="productForm" *ngIf="tipo; else noTipo" (ngSubmit)="addProduct()">
+						<div>
+							<div class="col mt-3">
+							  	<input maxlength="5" formControlName="productID" class="form-control form-control-lg" placeholder="ID del producto">
+							</div>
+							<div class="text-danger text-start px-2" *ngIf="productForm.get('productID')?.hasError('required') && productForm.get('productID')?.touched" >El ID del producto es necesario</div>
+							<div class="col mt-3">
+							  	<input type="text" formControlName="product" class="form-control form-control-lg" placeholder="Producto">
+							</div>
+							<div class="text-danger text-start px-2" *ngIf="productForm.get('product')?.hasError('required') && productForm.get('product')?.touched">El producto es necesario</div>
+							<div class="col mt-3">
+							    <input type="number" formControlName="stock" class="form-control form-control-lg" placeholder="Cantidad disponible">
+							</div>	
+							<div class="text-danger text-start px-2" *ngIf="productForm.get('stock')?.hasError('required') && productForm.get('stock')?.touched">La cantidad de producto disponible es necesaria</div>
+							<div class="col mt-3">
+							    <input type="number" formControlName="alerta" class="form-control form-control-lg" placeholder="Establecer alerta para reabastecer">
+							</div>	
+							  <div class="col-auto">
+							  	<p class="text-start mb-1">Tipo</p>
+							    <select class="form-select" aria-label="Default select example" formControlName="tipo">
+								  <option value="Litros">Litros</option>
+								  <option value="Kilos">Kilos</option>
+								  <option value="No especificado">No especificado</option>
+								</select>
+								<div class="text-danger text-start px-2" *ngIf="productForm.get('tipo')?.hasError('required') && productForm.get('tipo')?.touched">El tipo de producto es necesario</div>
+							  </div>
+							 <div class="col mt-3 text-start">
+								  <label for="descripcion" class="form-label">Descripcion</label>
+								  <textarea class="form-control" id="descripcion" rows="4" formControlName="descripcion"></textarea>
+								</div>
+						</div>
+						<div class="col-auto mt-4 mb-3">
+								<button type="submit" [disabled]="productForm.invalid" class="btn btn-success float-start">Crear</button>
+						</div>
+						<div class="col-auto mt-4 mb-3">
+								<button class="btn btn-secondary float-end" routerLink='/'>Volver</button>
+						</div>
+					</form>
+					<ng-template #noTipo>
+						<form class="row gx-3 gy-2 align-items-center" [formGroup]="ganadoForm" (ngSubmit)="addGanado()">
+									<div>
+										<div class="col">
+									  	<input type="text" maxlength="5" formControlName="ganadoID" class="form-control form-control-lg" placeholder="ID">
+											</div>
+											<div class="text-danger text-start px-2" *ngIf="ganadoForm.get('ganadoID')?.hasError('required') && ganadoForm.get('ganadoID')?.touched">El ID es necesario</div>
+									  <div class="col-sm-3 mt-3">
+									  	<mat-form-field>
+										  <mat-label>Fecha de nacimiento</mat-label>
+										  <input matInput [matDatepicker]="picker" formControlName="fechaDeNacimiento"  [(ngModel)]="fechaDeNacimiento">
+										  <mat-hint></mat-hint>
+										  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+										  <mat-datepicker #picker></mat-datepicker>
+									    </mat-form-field>
+									  </div>
+									   <div class="text-danger text-start px-2 mb-4" *ngIf="ganadoForm.get('fechaDeNacimiento')?.hasError('required') && ganadoForm.get('fechaDeNacimiento')?.touched">La fecha de nacimiento es necesaria</div>
+									  <div class="col-sm-3">
+									  	<mat-form-field>
+										  <mat-label>Fecha de ingreso</mat-label>
+										  <input matInput [matDatepicker]="ingreso" formControlName="fechaDeIngreso">
+										  <mat-hint></mat-hint>
+										  <mat-datepicker-toggle matIconSuffix [for]="ingreso"></mat-datepicker-toggle>
+										  <mat-datepicker #ingreso></mat-datepicker>
+									    </mat-form-field>
+									  </div>
+									  <div class="text-danger text-start px-2 mb-4" *ngIf="ganadoForm.get('fechaDeIngreso')?.hasError('required') && ganadoForm.get('fechaDeIngreso')?.touched">La fecha de ingreso es necesaria</div>
+									  <div class="col-sm-3">
+									  	<mat-form-field>
+										  <mat-label>Ultima vacunacion</mat-label>
+										  <input matInput [matDatepicker]="vacuna" formControlName="fechaDeVacunacion">
+										  <mat-hint></mat-hint>
+										  <mat-datepicker-toggle matIconSuffix [for]="vacuna"></mat-datepicker-toggle>
+										  <mat-datepicker #vacuna></mat-datepicker>
+									    </mat-form-field>
+									  </div>
+									  <div class="text-danger text-start px-2 mb-4" *ngIf="ganadoForm.get('fechaDeVacunacion')?.hasError('required') && ganadoForm.get('fechaDeVacunacion')?.touched">La fecha de la ultima vacunacion es necesaria</div>
+									   
+									  <div class="col-auto">
+									  	<p class="text-start mb-1">Proposito</p>
+									    <select class="form-select" aria-label="Default select example" formControlName="proposito">
+										  <option value="Cria">Cria</option>
+										  <option value="Ceba">Ceba</option>
+										  <option value="Ordeño">Ordeño</option>
+										</select>
+										<div class="text-danger text-start px-2" *ngIf="ganadoForm.get('proposito')?.hasError('required') && ganadoForm.get('proposito')?.touched">El proposito es necesario</div>
+										<p class="text-start mb-1 mt-2">Genero</p>
+									    <select class="form-select" aria-label="Default select example" formControlName="genero">
+										  <option value="Macho">Macho</option>
+										  <option value="Hembra">Hembra</option>
+										</select>
+										<div class="text-danger text-start px-2" *ngIf="ganadoForm.get('genero')?.hasError('required') && ganadoForm.get('genero')?.touched">El genero es necesario</div>
+									  </div>
+									  <p class="text-start mb-1 mt-2" *ngIf="calcularEdad(fechaDeNacimiento) < 3">Destetado</p>
+									    <select class="form-select" aria-label="Default select example" formControlName="destetado">
+										  <option value="Si">Si</option>
+										  <option value="No">No</option>
+										</select>
+									  <div class="mb-3 text-start">
+										  <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
+										  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="descripcion"></textarea>
+										</div>
+									</div>
+									<div class="col-auto mt-4 mb-3">
+										<button type="submit" [disabled]="ganadoForm.invalid"  class="btn btn-success float-start">Crear</button>
+									</div>
+									<div class="col-auto mt-4 mb-3">
+										<button class="btn btn-secondary float-end" routerLink='/'>Volver</button>
+									</div>
+					    </form>
+				    </ng-template>  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
