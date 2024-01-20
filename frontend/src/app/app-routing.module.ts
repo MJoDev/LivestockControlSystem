@@ -12,6 +12,8 @@ import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.
 import { InicioComponent } from './components/inicio/inicio.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SiginComponent } from './components/sigin/sigin.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
+
 
 
 
@@ -30,6 +32,7 @@ const routes: Routes = [
 {path: 'inicio', component: InicioComponent, canActivate: [AuthGuard]},
 {path: 'adultos', component: AdultosComponent, canActivate: [AuthGuard]},
 {path: 'editar-ganado/:id', component: EditarGanadoComponent, canActivate: [AuthGuard]},
+{path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard]},
 {path: 'signup', component: RegisterComponent},
 {path: 'signin', component: SiginComponent},
 
