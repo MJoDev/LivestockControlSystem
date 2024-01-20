@@ -6,13 +6,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routing, appRoutingProviders } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateComponent } from './components/create/create.component';
 import { ListComponent } from './components/list/list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListComponent } from './components/product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './auth.guard';
 
 import { ToastrModule } from 'ngx-toastr';
 import { EditarProductoComponent } from './components/editar-producto/editar-producto.component';
@@ -21,6 +23,9 @@ import { AdultosComponent } from './components/adultos/adultos.component';
 import { BecerrosComponent } from './components/becerros/becerros.component';
 import { FiltroGanadoPipe } from './pipes/filtro-ganado.pipe';
 import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { RegisterComponent } from './components/register/register.component';
+import { SiginComponent } from './components/sigin/sigin.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.
     AdultosComponent,
     BecerrosComponent,
     FiltroGanadoPipe,
-    EditarGanadoComponent
+    EditarGanadoComponent,
+    InicioComponent,
+    RegisterComponent,
+    SiginComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +49,7 @@ import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    routing,
     BrowserAnimationsModule, 
     FormsModule,
     ReactiveFormsModule,
@@ -50,7 +59,15 @@ import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.
     }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    appRoutingProviders,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ListComponent } from './components/list/list.component';
@@ -8,21 +9,30 @@ import { EditarProductoComponent } from './components/editar-producto/editar-pro
 import { AdultosComponent } from './components/adultos/adultos.component';
 import { BecerrosComponent } from './components/becerros/becerros.component';
 import { EditarGanadoComponent } from './components/editar-ganado/editar-ganado.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { RegisterComponent } from './components/register/register.component';
+import { SiginComponent } from './components/sigin/sigin.component';
 
 
 
+
+import { AuthGuard } from './auth.guard';
 
 
 
 const routes: Routes = [
-{path: '', component: ListComponent},
-{path: 'list', component: ListComponent},
-{path: 'create', component: CreateComponent},
-{path: 'editar-producto/:id', component: EditarProductoComponent},
-{path: 'productos', component: ProductListComponent},
-{path: 'becerros', component: BecerrosComponent},
-{path: 'adultos', component: AdultosComponent},
-{path: 'editar-ganado/:id', component: EditarGanadoComponent},
+{path: '', component: SiginComponent},
+{path: 'list', component: ListComponent, canActivate: [AuthGuard]},
+{path: 'create', component: CreateComponent, canActivate: [AuthGuard]},
+{path: 'editar-producto/:id', component: EditarProductoComponent, canActivate: [AuthGuard]},
+{path: 'productos', component: ProductListComponent, canActivate: [AuthGuard]},
+{path: 'becerros', component: BecerrosComponent, canActivate: [AuthGuard]},
+{path: 'inicio', component: InicioComponent, canActivate: [AuthGuard]},
+{path: 'adultos', component: AdultosComponent, canActivate: [AuthGuard]},
+{path: 'editar-ganado/:id', component: EditarGanadoComponent, canActivate: [AuthGuard]},
+{path: 'signup', component: RegisterComponent},
+{path: 'signin', component: SiginComponent},
+
 
 
 ];
@@ -32,3 +42,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const appRoutingProviders: any[] = [];
+export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot(routes);
