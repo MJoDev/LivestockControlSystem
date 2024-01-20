@@ -122,18 +122,20 @@
 										</select>
 										<div class="text-danger text-start px-2" *ngIf="ganadoForm.get('genero')?.hasError('required') && ganadoForm.get('genero')?.touched">El genero es necesario</div>
 									  </div>
-									  <p class="text-start mb-1 mt-2" *ngIf="calcularEdad(fechaDeNacimiento) < 3">Destetado</p>
-									    <select class="form-select" aria-label="Default select example" formControlName="destetado">
-										  <option value="Si">Si</option>
-										  <option value="No">No</option>
-										</select>
+									  <div *ngIf="calcularEdad(fechaDeNacimiento) < 3">
+										<p class="text-start mb-1 mt-2">Destetado </p>
+											<select class="form-select" aria-label="Default select example" formControlName="destetado">
+											  <option value="Si">Si</option>
+											  <option value="No">No</option>
+											</select>
+									  </div>
 									  <div class="mb-3 text-start">
 										  <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
-										  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="descripcion"></textarea>
+										  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="descripcion" placeholder="Informacion describiendo al animal"></textarea>
 										</div>
 									  <div class="mb-3 text-start" *ngIf="generoSeleccionado === 'Hembra'">
 											<label for="exampleFormControlTextarea1" class="form-label">Litros</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="litros"></textarea>
+											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="litros" placeholder="Cuantos litros da por ordeño"></textarea>
 									  </div>
 									</div>
 									<div class="col-auto mt-4 mb-3">

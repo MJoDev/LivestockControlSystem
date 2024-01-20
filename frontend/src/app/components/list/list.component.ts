@@ -57,7 +57,7 @@ export class ListComponent implements OnInit{
   }
 
   litrosMostrar(ganado: any){
-    this.toastr.info(ganado.litros, 'Descripcion de: ' + ganado.ganadoID , {
+    this.toastr.info(ganado.litros, 'Cuantos litros da: ' + ganado.ganadoID , {
       closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
     })
   }
