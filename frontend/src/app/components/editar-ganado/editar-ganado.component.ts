@@ -19,6 +19,7 @@ export class EditarGanadoComponent {
 
      id!: string | null;
      fechaDeNacimiento: string = '';
+     generoSeleccionado: string = '';
 
      
 
@@ -37,7 +38,8 @@ export class EditarGanadoComponent {
             fechaDeVacunacion: ['', Validators.required],
             fechaDeIngreso: ['', Validators.required],
             descripcion: [''],
-            destetado: ['']
+            destetado: [''],
+            litros: ['']
           });
         this.id = this.aRouter.snapshot.paramMap.get('id');
      };
@@ -54,6 +56,7 @@ export class EditarGanadoComponent {
       descripcion: this.ganadoForm.get('descripcion')?.value,
       destetado: this.ganadoForm.get('destetado')?.value,
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
+      litros: this.ganadoForm.get('litros')?.value,
     };
 
     if(this.id !== null){
