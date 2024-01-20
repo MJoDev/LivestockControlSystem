@@ -28,6 +28,7 @@ export class CreateComponent implements OnInit {
   tipo!: boolean;
   id!: string | null;
   generoSeleccionado: string = '';
+  propositoSeleccionado: string = '';
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private productoService: ProductService, private aRouter: ActivatedRoute, private ganadoService: GanadoService){
     this.productForm = this.fb.group({
       _id: [''],

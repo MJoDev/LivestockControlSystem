@@ -58,7 +58,7 @@
 					 			<th>Genero</th>
 					 			<th>Proposito</th>
 					 			<th>Descripcion</th>
-								<th *ngIf="filtroGenero === 'Hembra'">Leche</th>
+								<th *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">Leche</th>
 					 			<th>Editar/Eliminar</th>
 					 		</tr>
 					 	</thead>
@@ -73,7 +73,7 @@
 					 			<td>
 							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
 								</td>
-								<td *ngIf="filtroGenero === 'Hembra'">
+								<td *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">
 									<i (click)="litrosMostrar(ganado)" class="fa-solid fa-circle-info"></i>
 								</td>
 					 			<td>

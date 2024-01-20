@@ -20,7 +20,7 @@ export class EditarGanadoComponent {
      id!: string | null;
      fechaDeNacimiento: string = '';
      generoSeleccionado: string = '';
-
+     propositoSeleccionado: string = '';
      
 
     ganadoForm!: FormGroup;

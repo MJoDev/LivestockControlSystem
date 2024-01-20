@@ -26,9 +26,28 @@
 		<div class="col-lg-8 offset-lg-2">
 			<div class="card">
 				<div class="card-body text-center">
-					<span>Lista de Becerros</span> 
+					<span class="text-center">Lista de Becerros</span> 
 					<button class="btn btn-success float-end mb-2" routerLink="/create">Nuevo</button>
 					<input class="form-control me-2" type="text" placeholder="Buscar por ID" [(ngModel)]="filtroID" aria-label="Search"> 
+					<div class="mt-2 mb-2">
+						<label for="Genero">
+							<span>Genero</span>
+							<select [(ngModel)]="filtroGenero" (change)="aplicarFiltro()" class="form-select">
+								<option value="todos">Todos</option>
+								<option value="Macho">Machos</option>
+								<option value="Hembra">Hembras</option>
+							</select>
+						</label>
+						<label for="Proposito">
+							<span>Proposito</span>
+							<select [(ngModel)]="filtroProposito" (change)="aplicarFiltro()" class="form-select">
+								<option value="todos">Todos</option>
+								<option value="Cria">Cria</option>
+								<option value="Ceba">Ceba</option>
+								<option value="Ordeño">Ordeño</option>
+							</select>
+						</label>
+					</div>
 					<table class="table table-dark table-striped table-hover mt-3" *ngIf="listGanado.length > 0">
 					 	<thead>
 					 		<tr>
@@ -39,11 +58,12 @@
 					 			<th>Genero</th>
 					 			<th>Destetado</th>
 					 			<th>Descripcion</th>
+					 			<th>Proposito</th>
 					 			<th>Editar/Eliminar</th>	
 					 		</tr>
 					 	</thead>
 					 	<tbody>
-					 		<tr *ngFor="let ganado of listGanado | filtroGanado:filtroID">
+					 		<tr *ngFor="let ganado of aplicarFiltro()">
 					 			<th>{{ ganado.ganadoID }}</th>
 					 			<td>{{ calcularEdad(ganado.fechaDeNacimiento) }}</td>
 					 			<td>{{ ganado.fechaDeIngreso | date:'yyyy-MM-dd' }}</td>
@@ -53,6 +73,7 @@
 					 			<td>
 							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
 								</td>
+								<td>{{ ganado.proposito }}</td>
 					 			<td>
 					 			<i [routerLink]="['/editar-ganado', ganado._id]" class="mx-2 fa-solid fa-pen-to-square"></i>
 					 			<i (click)="eliminarGanado(ganado._id)" class="fa-solid fa-trash"></i>
