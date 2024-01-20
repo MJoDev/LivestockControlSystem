@@ -39,6 +39,7 @@ export class EditarGanadoComponent {
             fechaDeIngreso: ['', Validators.required],
             descripcion: [''],
             destetado: [''],
+            salud: [''],
             litros: ['']
           });
         this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -57,6 +58,7 @@ export class EditarGanadoComponent {
       destetado: this.ganadoForm.get('destetado')?.value,
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
       litros: this.ganadoForm.get('litros')?.value,
+      salud: this.ganadoForm.get('salud')?.value,
     };
 
     if(this.id !== null){
@@ -85,6 +87,7 @@ export class EditarGanadoComponent {
   esEditar(){
         if(this.id !== null){
           this.ganadoService.obtenerGanado(this.id).subscribe(data => {
+            console.log(data);
             this.ganadoForm.setValue({
                 _id: data._id,
                 ganadoID: data.ganadoID,
@@ -94,6 +97,8 @@ export class EditarGanadoComponent {
                 fechaDeIngreso: data.fechaDeIngreso,
                 destetado: data.destetado,
                 genero: data.genero,
+                litros: data.litros,
+                salud: data.salud,
                 proposito: data.proposito,
 
             });

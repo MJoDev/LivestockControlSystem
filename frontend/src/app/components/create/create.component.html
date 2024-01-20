@@ -133,6 +133,10 @@
 										  <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
 										  <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="descripcion" placeholder="Informacion describiendo al animal"></textarea>
 										</div>
+									   <div class="mb-3 text-start">
+											<label for="exampleFormControlTextarea1" class="form-label">Estado de salud</label>
+											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="salud" placeholder="Informacion de estado de salud del animal"></textarea>
+									  </div>
 									  <div class="mb-3 text-start" *ngIf="generoSeleccionado === 'Hembra' && propositoSeleccionado === 'Ordeño'">
 											<label for="exampleFormControlTextarea1" class="form-label">Litros</label>
 											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="litros" placeholder="Cuantos litros da por ordeño"></textarea>

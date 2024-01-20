@@ -62,6 +62,12 @@ export class ListComponent implements OnInit{
     })
   }
 
+  saludMostrar(ganado: any){
+    this.toastr.info(ganado.salud, 'Estado de salud: ' + ganado.ganadoID , {
+      closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
+    })
+  }
+
   aplicarFiltro() {
     // Puedes ajustar esta lógica según tus necesidades
     // Si el filtro es 'todos', muestra todas las personas

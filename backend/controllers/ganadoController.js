@@ -7,6 +7,7 @@ exports.crearGanado = async (req, res) => {
 
 		ganado = new Ganado({
 		ganadoID: req.body.ganadoID,
+		salud: req.body.salud,
 		litros: req.body.litros,
 		fechaDeNacimiento: req.body.fechaDeNacimiento,
 		fechaDeIngreso: req.body.fechaDeIngreso,
@@ -40,13 +41,14 @@ exports.obtenerGanados = async (req, res) =>{
 
 exports.actualizarGanado = async (req, res) => {
 	try{
-		const { ganadoID, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito } = req.body;
+		const { ganadoID, salud, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito } = req.body;
 		let ganado = await Ganado.findById(req.params.id);
 
 		if(!ganado){
 			res.status(404).json({msg: 'No existe'});
 		}
 		ganado.ganadoID = ganadoID;
+		ganado.salud = salud;
 		ganado.litros = litros;
 		ganado.fechaDeNacimiento = fechaDeNacimiento;
 		ganado.fechaDeIngreso = fechaDeIngreso;

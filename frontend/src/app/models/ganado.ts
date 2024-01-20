@@ -7,6 +7,7 @@ export class Ganado {
 	proposito!: string;
 	genero!: string;
 	litros!: any;
+	salud!: any;
 	descripcion!: string;
 	destetado!: string;
 }

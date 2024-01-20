@@ -58,6 +58,7 @@
 					 			<th>Genero</th>
 					 			<th>Destetado</th>
 					 			<th>Descripcion</th>
+					 			<th>Salud</th>
 					 			<th>Proposito</th>
 					 			<th>Editar/Eliminar</th>	
 					 		</tr>
@@ -73,6 +74,9 @@
 					 			<td>
 							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
 								</td>
+								<td>
+									<i (click)="saludMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
+							   </td>
 								<td>{{ ganado.proposito }}</td>
 					 			<td>
 					 			<i [routerLink]="['/editar-ganado', ganado._id]" class="mx-2 fa-solid fa-pen-to-square"></i>

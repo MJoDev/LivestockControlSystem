@@ -49,6 +49,7 @@ export class CreateComponent implements OnInit {
       fechaDeIngreso: ['', Validators.required],
       litros: [''],
       descripcion: [''],
+      salud: [''],
       destetado: ['']
     });
   }
@@ -94,6 +95,7 @@ export class CreateComponent implements OnInit {
       destetado: this.ganadoForm.get('destetado')?.value,
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
       litros: this.ganadoForm.get('litros')?.value,
+      salud: this.ganadoForm.get('salud')?.value,
     }
 
     console.log(GANADO);

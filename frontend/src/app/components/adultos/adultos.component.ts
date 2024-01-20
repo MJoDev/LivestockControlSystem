@@ -85,5 +85,10 @@ export class AdultosComponent {
       closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
     })
   }
+  saludMostrar(ganado: any){
+    this.toastr.info(ganado.salud, 'Estado de salud: ' + ganado.ganadoID , {
+      closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
+    })
+  }
 
 }
