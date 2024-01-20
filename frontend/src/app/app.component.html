@@ -1,1 +1,9 @@
 <router-outlet></router-outlet>
+<ng-container *ngIf="authService.loggedIn(); else loggedOut">
+    <footer class="row align-items-end mt-5 mx-5" style="vertical-align: bottom;">
+        <button class="btn btn-danger" (click)="authService.logOut()" routerLink="/">Cerrar Sesion</button>
+    </footer>
+</ng-container>
+<ng-template #loggedOut>
+
+</ng-template>
