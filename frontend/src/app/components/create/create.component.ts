@@ -27,6 +27,7 @@ export class CreateComponent implements OnInit {
   fechaDeNacimiento: string = '';
   tipo!: boolean;
   id!: string | null;
+  generoSeleccionado: string = '';
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private productoService: ProductService, private aRouter: ActivatedRoute, private ganadoService: GanadoService){
     this.productForm = this.fb.group({
       _id: [''],
@@ -45,11 +46,12 @@ export class CreateComponent implements OnInit {
       genero: ['', Validators.required],
       fechaDeVacunacion: ['', Validators.required],
       fechaDeIngreso: ['', Validators.required],
+      litros: [''],
       descripcion: [''],
       destetado: ['']
     });
-    
   }
+
   ngOnInit(){
     
   }
@@ -63,8 +65,6 @@ export class CreateComponent implements OnInit {
       stock: this.productForm.get('stock')?.value,
       tipo: this.productForm.get('tipo')?.value,
       alerta: this.productForm.get('alerta')?.value,
-
-
     };
 
     console.log(PRODUCTO);
@@ -81,8 +81,8 @@ export class CreateComponent implements OnInit {
   
   }
   addGanado(){
-    console.log(this.ganadoForm);
-     const GANADO: Ganado = {
+
+    const GANADO: Ganado = {
       _id: this.ganadoForm.get('_id')?.value,
       ganadoID: this.ganadoForm.get('ganadoID')?.value,
       fechaDeNacimiento: this.ganadoForm.get('fechaDeNacimiento')?.value,
@@ -92,11 +92,8 @@ export class CreateComponent implements OnInit {
       descripcion: this.ganadoForm.get('descripcion')?.value,
       destetado: this.ganadoForm.get('destetado')?.value,
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
-
-
-
-
-    };
+      litros: this.ganadoForm.get('litros')?.value,
+    }
 
     console.log(GANADO);
     this.ganadoService.guardarGanado(GANADO).subscribe(data =>{

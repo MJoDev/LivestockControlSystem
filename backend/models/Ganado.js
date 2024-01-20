@@ -26,6 +26,10 @@ const GanadoSchema = mongoose.Schema({
 		type: String,
 		required: false
 	},
+	litros: {
+		type: String,
+		required: false
+	},
 	destetado: {
 		type: String,
 		required: false

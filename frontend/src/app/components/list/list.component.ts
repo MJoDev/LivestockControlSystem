@@ -12,6 +12,9 @@ import { Popover } from 'bootstrap';
 export class ListComponent implements OnInit{
   filtroID: string = '';
   listGanado: Ganado[] = [];
+  filtroGenero: string = 'todos';
+  filtroProposito: string = 'todos';
+  filtroNombre: string = '';
 
   constructor(private ganadoService: GanadoService, private toastr: ToastrService){}
   ngOnInit(){
@@ -51,5 +54,22 @@ export class ListComponent implements OnInit{
     }
 
     return edad;
+  }
+
+  litrosMostrar(ganado: any){
+    this.toastr.info(ganado.litros, 'Descripcion de: ' + ganado.ganadoID , {
+      closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
+    })
+  }
+
+  aplicarFiltro() {
+    // Puedes ajustar esta lógica según tus necesidades
+    // Si el filtro es 'todos', muestra todas las personas
+    // Si no, filtra las personas por género seleccionado
+    return this.listGanado.filter(persona => 
+      (this.filtroGenero === 'todos' || persona.genero === this.filtroGenero) &&
+      (this.filtroProposito === 'todos' || persona.proposito === this.filtroProposito) &&
+      (persona.ganadoID.toLowerCase().includes(this.filtroNombre.toLowerCase()))
+    );
   }
 }
