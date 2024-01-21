@@ -27,8 +27,11 @@
 		<div class="col-lg-8 offset-lg-2">
 			<div class="card">
 				<div class="card-body text-center">
-					<span class="fs-4 fw-bold">Reportes</span> 
-					<button class="btn btn-success" (click)="generarPDF()">Generar PDF</button>
+					<span class="fs-4 fw-bold px-5">Reportes</span>
+					<div class="mt-1">
+						<div class="mb-2">Hoy es {{fechaDeHoy | date: 'dd-MM-yyyy'}}</div>
+						<button class="btn btn-success" (click)="generarPDF()">Generar PDF</button>
+					</div>
 				</div>
 			</div>
 		</div>

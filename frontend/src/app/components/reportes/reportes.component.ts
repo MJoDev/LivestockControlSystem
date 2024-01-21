@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Popover } from 'bootstrap';
 import { formatDate } from '@angular/common';
 import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable'
 
 
 @Component({
@@ -13,7 +14,7 @@ import { jsPDF } from "jspdf";
   styleUrls: ['./reportes.component.css']
 })
 export class ReportesComponent implements OnInit {
-
+      fechaDeHoy: Date = new Date();
       listGanado: Ganado[] = [];
       listaAdultos: Ganado[] = [];
       listaBecerros: Ganado[] = [];
@@ -55,16 +56,15 @@ export class ReportesComponent implements OnInit {
       }
       generarPDF() {
         const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-    
+        const formattedDate = this.formatDate(today);
+
         const doc = new jsPDF();
-        doc.text(`Reporte de Animales - ${formattedDate}`, 20, 10);
         doc.text(`Reporte generado el ${formattedDate}`, 20, 20);
     
         const data = [['Total Animales', 'Total Adultos', 'Total Becerros'],
                       [this.listGanado.length, this.totalAdultos, this.totalBecerros]];
     
-        doc.autoTable({
+        autoTable(doc, {
           startY: 30,
           head: [['Total Animales', 'Total Adultos', 'Total Becerros']],
           body: [data[1]],
@@ -72,5 +72,7 @@ export class ReportesComponent implements OnInit {
     
         doc.save(`Reporte_Animales_${formattedDate}.pdf`);
       }
-      
+      private formatDate(date: Date): string {
+        return new Intl.DateTimeFormat('es-ES',  { day: 'numeric', month: 'numeric', year: 'numeric'}).format(date);
+      }
 }
