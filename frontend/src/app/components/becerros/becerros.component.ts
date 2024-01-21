@@ -83,7 +83,7 @@ export class BecerrosComponent {
     // Si no, filtra las personas por género seleccionado
     return this.listGanado.filter(persona => 
       (this.filtroGenero === 'todos' || persona.genero === this.filtroGenero) &&
-      (this.filtroProposito === 'todos' || persona.proposito === this.filtroProposito) &&
+      (this.filtroProposito === 'todos' || persona.destetado === this.filtroProposito) &&
       (persona.ganadoID.toLowerCase().includes(this.filtroNombre.toLowerCase()))
     );
   } 

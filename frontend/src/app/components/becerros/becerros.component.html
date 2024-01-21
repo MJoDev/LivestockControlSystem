@@ -40,12 +40,11 @@
 							</select>
 						</label>
 						<label for="Proposito">
-							<span>Proposito</span>
+							<span>Destetado</span>
 							<select [(ngModel)]="filtroProposito" (change)="aplicarFiltro()" class="form-select">
 								<option value="todos">Todos</option>
-								<option value="Cria">Cria</option>
-								<option value="Ceba">Ceba</option>
-								<option value="Ordeño">Ordeño</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
 							</select>
 						</label>
 					</div>
@@ -60,7 +59,6 @@
 					 			<th>Destetado</th>
 					 			<th>Descripcion</th>
 					 			<th>Salud</th>
-					 			<th>Proposito</th>
 					 			<th>Editar/Eliminar</th>	
 					 		</tr>
 					 	</thead>
@@ -78,7 +76,6 @@
 								<td>
 									<i (click)="saludMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
 							   </td>
-								<td>{{ ganado.proposito }}</td>
 					 			<td>
 					 			<i [routerLink]="['/editar-ganado', ganado._id]" class="mx-2 fa-solid fa-pen-to-square"></i>
 					 			<i (click)="eliminarGanado(ganado._id)" class="fa-solid fa-trash"></i>

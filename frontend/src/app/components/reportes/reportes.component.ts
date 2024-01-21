@@ -3,6 +3,8 @@ import { Ganado } from 'src/app/models/ganado';
 import {GanadoService} from '../../services/ganado.service';
 import { ToastrService } from 'ngx-toastr';
 import { Popover } from 'bootstrap';
+import { formatDate } from '@angular/common';
+import { jsPDF } from "jspdf";
 
 
 @Component({
@@ -15,61 +17,60 @@ export class ReportesComponent implements OnInit {
       listGanado: Ganado[] = [];
       listaAdultos: Ganado[] = [];
       listaBecerros: Ganado[] = [];
+      totalAdultos: number = 0;
+      totalBecerros: number = 0;
 
 
       constructor(private ganadoService: GanadoService, private toastr: ToastrService){}
       ngOnInit(){
         this.obtenerGanados();
-        console.log('lista de adultos' + this.listaAdultos);
-        console.log('lista de becerros' + this.listaBecerros);
 
       }
       obtenerGanados(){
         this.ganadoService.getGanados().subscribe(data =>{
           console.log(data);
           this.listGanado = data;
-    
+          this.filtrarGanado();
+          console.log(this.listaAdultos);
+          console.log(this.listaBecerros);
         }, error =>{ console.log(error)});
       }
-      calcularEdad(fechaNacimiento: string): string {
-        const fechaNacimientoDate = new Date(fechaNacimiento);
+      filtrarGanado() {
         const hoy = new Date();
-    
-        const añosDif = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
-        const mesesDif = hoy.getMonth() - fechaNacimientoDate.getMonth();
-    
-        let edad = '';
-    
-        if (mesesDif < 0 || (mesesDif === 0 && hoy.getDate() < fechaNacimientoDate.getDate())) {
-          edad = `${añosDif - 1} años y ${12 + mesesDif} meses`;
-        } else {
-          edad = `${añosDif} años y ${mesesDif} meses`;
-        }
-    
-        return edad;
-      }
-      filtrarBecerros(): void {
-        this.listaBecerros = this.listGanado.filter(ganado => {
-          const edad = this.calcularEdad(ganado.fechaDeNacimiento);
-          const matchEdad = /^(\d+) años/.exec(edad);
-    
-          if (matchEdad && matchEdad[1]) {
-            return parseInt(matchEdad[1], 10) <= 3;
-          }
-    
-          return false;
-          });
-      }
-      filtrarAdultos(): void {
         this.listaAdultos = this.listGanado.filter(ganado => {
-          const edad = this.calcularEdad(ganado.fechaDeNacimiento);
-          const matchEdad = /^(\d+) años/.exec(edad);
-          
-          if (matchEdad && matchEdad[1]) {
-            return parseInt(matchEdad[1], 10) >= 3;
-          }
-    
-          return false;
-          });
+          const fechaNacimiento = new Date(ganado.fechaDeNacimiento);
+          const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+          return edad > 3;
+        });
+      
+        this.listaBecerros = this.listGanado.filter(ganado => {
+          const fechaNacimiento = new Date(ganado.fechaDeNacimiento);
+          const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+          return edad <= 3;
+        });
+
+        this.totalAdultos = this.listaAdultos.length;
+        this.totalBecerros = this.listaBecerros.length;
+
       }
+      generarPDF() {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+    
+        const doc = new jsPDF();
+        doc.text(`Reporte de Animales - ${formattedDate}`, 20, 10);
+        doc.text(`Reporte generado el ${formattedDate}`, 20, 20);
+    
+        const data = [['Total Animales', 'Total Adultos', 'Total Becerros'],
+                      [this.listGanado.length, this.totalAdultos, this.totalBecerros]];
+    
+        doc.autoTable({
+          startY: 30,
+          head: [['Total Animales', 'Total Adultos', 'Total Becerros']],
+          body: [data[1]],
+        });
+    
+        doc.save(`Reporte_Animales_${formattedDate}.pdf`);
+      }
+      
 }
