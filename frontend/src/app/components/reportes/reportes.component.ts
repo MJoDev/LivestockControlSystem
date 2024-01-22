@@ -65,6 +65,7 @@ export class ReportesComponent implements OnInit {
                       [this.listGanado.length, this.totalAdultos, this.totalBecerros]];
     
         autoTable(doc, {
+          styles: { fillColor: [43, 102, 55] },
           startY: 30,
           head: [['Total Animales', 'Total Adultos', 'Total Becerros']],
           body: [data[1]],
