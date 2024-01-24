@@ -15,6 +15,8 @@ export class BecerrosComponent {
   filtroGenero: string = 'todos';
   filtroProposito: string = 'todos';
   filtroNombre: string = '';
+  showImage = false;
+
 
   constructor(private ganadoService: GanadoService, private toastr: ToastrService){}
   ngOnInit(){
