@@ -99,6 +99,11 @@
 											<label for="exampleFormControlTextarea1" class="form-label">Litros</label>
 											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="litros" placeholder="Cuantos litros da por ordeño"></textarea>
 									  </div>
+									  <div>
+										<label for="imagen">Imagen del Ganado:</label>
+										<input type="file" id="imagen" (change)="onFileChange($event)">
+										<img  *ngIf="previsualizacion" width="100px" [src]="previsualizacion" alt="Imagen de Ganado">
+									  </div>
 									</div>
 									<div class="col-auto mt-4 mb-3">
 										<button type="submit" [disabled]="ganadoForm.invalid"  class="btn btn-success float-start">Editar</button>

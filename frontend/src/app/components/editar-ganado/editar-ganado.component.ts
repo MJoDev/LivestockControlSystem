@@ -8,6 +8,7 @@ import { Ganado } from 'src/app/models/ganado';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import {GanadoService} from '../../services/ganado.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,13 +25,16 @@ export class EditarGanadoComponent {
      fechaMinima!: Date;
      fechaMaxima!: Date;
      fechaMedia!: Date;
+     previsualizacion!: string;
+      loadind!: boolean;
+      archivos: any = [];
 
     ganadoForm!: FormGroup;
     constructor(private fb: FormBuilder, 
        private router: Router, 
        private toastr: ToastrService,
        private ganadoService: GanadoService,
-       private aRouter: ActivatedRoute){
+       private aRouter: ActivatedRoute, private sanitizer: DomSanitizer){
        this.ganadoForm = this.fb.group({
             _id: [''],
             ganadoID: ['', Validators.required],
@@ -99,6 +103,7 @@ export class EditarGanadoComponent {
   esEditar(){
         if(this.id !== null){
           this.ganadoService.obtenerGanado(this.id).subscribe(data => {
+            this.previsualizacion = data.imagen;
             console.log(data);
             this.ganadoForm.setValue({
                 _id: data._id,
@@ -112,6 +117,7 @@ export class EditarGanadoComponent {
                 litros: data.litros,
                 salud: data.salud,
                 proposito: data.proposito,
+                imagen: data.imagen,
 
             });
               console.log(this.ganadoForm);
@@ -139,4 +145,48 @@ export class EditarGanadoComponent {
 
     return edad;
   }
-}
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.extraerBase64(file).then((imagen:any) => {
+      this.previsualizacion = imagen.base;
+    });
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.ganadoService.uploadImage(formData).subscribe((response) => {
+        this.ganadoForm.patchValue({
+          imagen: response.imageUrl
+        });
+      });
+    }
+  }
+  
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+        try{
+          const unsafeImg = window.URL.createObjectURL($event);
+          const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+          const reader = new FileReader();
+          reader.readAsDataURL($event);
+          reader.onload = () => {
+            resolve({
+              base: reader.result
+            }); 
+          }
+          reader.onerror = error => {
+            resolve({
+              base: null
+            });
+          };
+        }catch (e) {
+          console.log(e);
+        }
+      })
+
+     
+      
+  }
+
+
