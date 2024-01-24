@@ -37,7 +37,7 @@
 									  <div class="col-sm-3 mt-3">
 									  	<mat-form-field>
 										  <mat-label>Fecha de nacimiento</mat-label>
-										  <input matInput [matDatepicker]="picker" formControlName="fechaDeNacimiento"  [(ngModel)]="fechaDeNacimiento">
+										  <input matInput [matDatepicker]="picker" formControlName="fechaDeNacimiento"  [(ngModel)]="fechaDeNacimiento" [min]="fechaMaxima" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 										  <mat-datepicker #picker></mat-datepicker>
@@ -47,7 +47,7 @@
 									  <div class="col-sm-3">
 									  	<mat-form-field>
 										  <mat-label>Fecha de ingreso</mat-label>
-										  <input matInput [matDatepicker]="ingreso" formControlName="fechaDeIngreso">
+										  <input matInput [matDatepicker]="ingreso" formControlName="fechaDeIngreso" [min]="fechaMinima" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="ingreso"></mat-datepicker-toggle>
 										  <mat-datepicker #ingreso></mat-datepicker>
@@ -57,7 +57,7 @@
 									  <div class="col-sm-3">
 									  	<mat-form-field>
 										  <mat-label>Ultima vacunacion</mat-label>
-										  <input matInput [matDatepicker]="vacuna" formControlName="fechaDeVacunacion">
+										  <input matInput [matDatepicker]="vacuna" formControlName="fechaDeVacunacion" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="vacuna"></mat-datepicker-toggle>
 										  <mat-datepicker #vacuna></mat-datepicker>

@@ -21,7 +21,9 @@ export class EditarGanadoComponent {
      fechaDeNacimiento: string = '';
      generoSeleccionado: string = '';
      propositoSeleccionado: string = '';
-     
+     fechaMinima!: Date;
+     fechaMaxima!: Date;
+     fechaMedia!: Date;
 
     ganadoForm!: FormGroup;
     constructor(private fb: FormBuilder, 
@@ -40,9 +42,18 @@ export class EditarGanadoComponent {
             descripcion: [''],
             destetado: [''],
             salud: [''],
-            litros: ['']
+            litros: [''],
+            imagen: ['']
           });
         this.id = this.aRouter.snapshot.paramMap.get('id');
+
+        this.fechaMedia = new Date();
+        this.fechaMaxima = new Date('1900-01-01');
+
+        // Configura la fecha mínima como hace tres días
+        this.fechaMinima = new Date();
+        this.fechaMinima.setDate(this.fechaMinima.getDate() - 5);
+
      };
 
    addGanado(){
@@ -59,6 +70,7 @@ export class EditarGanadoComponent {
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
       litros: this.ganadoForm.get('litros')?.value,
       salud: this.ganadoForm.get('salud')?.value,
+      imagen: this.ganadoForm.get('imagen')?.value,
     };
 
     if(this.id !== null){

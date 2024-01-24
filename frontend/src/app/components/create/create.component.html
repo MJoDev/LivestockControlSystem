@@ -80,7 +80,7 @@
 									  <div class="col-sm-3 mt-3">
 									  	<mat-form-field>
 										  <mat-label>Fecha de nacimiento</mat-label>
-										  <input matInput [matDatepicker]="picker" formControlName="fechaDeNacimiento"  [(ngModel)]="fechaDeNacimiento">
+										  <input matInput [matDatepicker]="picker" formControlName="fechaDeNacimiento"  [(ngModel)]="fechaDeNacimiento"  [min]="fechaMaxima" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 										  <mat-datepicker #picker></mat-datepicker>
@@ -90,7 +90,7 @@
 									  <div class="col-sm-3">
 									  	<mat-form-field>
 										  <mat-label>Fecha de ingreso</mat-label>
-										  <input matInput [matDatepicker]="ingreso" formControlName="fechaDeIngreso">
+										  <input matInput [matDatepicker]="ingreso" formControlName="fechaDeIngreso" [min]="fechaMinima" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="ingreso"></mat-datepicker-toggle>
 										  <mat-datepicker #ingreso></mat-datepicker>
@@ -100,7 +100,7 @@
 									  <div class="col-sm-3">
 									  	<mat-form-field>
 										  <mat-label>Ultima vacunacion</mat-label>
-										  <input matInput [matDatepicker]="vacuna" formControlName="fechaDeVacunacion">
+										  <input matInput [matDatepicker]="vacuna" formControlName="fechaDeVacunacion" [max]="fechaMedia">
 										  <mat-hint></mat-hint>
 										  <mat-datepicker-toggle matIconSuffix [for]="vacuna"></mat-datepicker-toggle>
 										  <mat-datepicker #vacuna></mat-datepicker>
@@ -141,6 +141,11 @@
 									  <div class="mb-3 text-start" *ngIf="generoSeleccionado === 'Hembra' && propositoSeleccionado === 'Ordeño'">
 											<label for="exampleFormControlTextarea1" class="form-label">Litros</label>
 											<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" formControlName="litros" placeholder="Cuantos litros da por ordeño"></textarea>
+									  </div>
+									  <div>
+										<label for="imagen">Imagen del Ganado:</label>
+										<input type="file" id="imagen" (change)="onFileChange($event)">
+										<img  *ngIf="previsualizacion" width="100px" [src]="previsualizacion" alt="Imagen de Ganado">
 									  </div>
 									</div>
 									<div class="col-auto mt-4 mb-3">

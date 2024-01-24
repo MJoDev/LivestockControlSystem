@@ -45,7 +45,11 @@ const GanadoSchema = mongoose.Schema({
 	fechaCreacion: {
 		type: Date,
 		default: Date.now()
-	}
+	},
+	imagen: {
+		type: String,
+		required: false,
+	},
 });
 
 module.exports = mongoose.model('Ganado', GanadoSchema);

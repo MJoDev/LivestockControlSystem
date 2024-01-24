@@ -33,7 +33,6 @@ const routes: Routes = [
 {path: 'adultos', component: AdultosComponent, canActivate: [AuthGuard]},
 {path: 'editar-ganado/:id', component: EditarGanadoComponent, canActivate: [AuthGuard]},
 {path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard]},
-{path: 'signup', component: RegisterComponent},
 {path: 'signin', component: SiginComponent},
 
 

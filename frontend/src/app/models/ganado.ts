@@ -10,4 +10,5 @@ export class Ganado {
 	salud!: any;
 	descripcion!: string;
 	destetado!: string;
+	imagen!: string;
 }

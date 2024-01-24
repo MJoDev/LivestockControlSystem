@@ -9,6 +9,7 @@ import {Ganado} from '../models/ganado';
 export class GanadoService {
 
   url = 'http://localhost:4000/api/ganado/';
+  upload = 'http://localhost:4000/api/upload';
 
   constructor(private http: HttpClient) { 
   }
@@ -26,5 +27,9 @@ export class GanadoService {
   }
   editarGanado(id: string, ganado: Ganado): Observable<any>{
     return this.http.put(this.url + id, ganado);
+  }
+
+  uploadImage(formData: FormData): Observable<any> {
+    return this.http.post(this.upload, formData);
   }
 }

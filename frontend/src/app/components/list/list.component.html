@@ -59,8 +59,8 @@
 					 			<th>Genero</th>
 					 			<th>Proposito</th>
 					 			<th>Descripcion</th>
-					 			<th>Salud</th>
-								<th *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">Leche</th>
+					 			<th *ngIf="filtroGenero != 'Hembra' && filtroProposito != 'Ordeño'" >Salud</th>
+								<th *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'Ordeño'">Leche</th>
 					 			<th>Editar/Eliminar</th>
 					 		</tr>
 					 	</thead>
@@ -73,12 +73,18 @@
 					 			<td>{{ ganado.genero }}</td>
 					 			<td>{{ ganado.proposito }}</td>
 					 			<td>
-							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
+							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>
+									 <div class="icon-container" (mouseover)="showImage=true" (mouseout)="showImage=false">
+										<i class="fa-solid fa-image"></i>
+										<div *ngIf="showImage" class="image-overlay">
+										  <img [src]="ganado.imagen" alt="Imagen de {{ ganado.ganadoID }}"  class="imagen-pequena">
+										</div>
+									  </div>		
 								</td>
-								<td>
+								<td *ngIf="filtroGenero != 'Hembra' && filtroProposito != 'Ordeño'" >
 									<i (click)="saludMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
-							   </td>
-								<td *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">
+							   	</td>
+								<td *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">
 									<i (click)="litrosMostrar(ganado)" class="fa-solid fa-circle-info"></i>
 								</td>
 					 			<td>

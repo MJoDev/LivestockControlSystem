@@ -15,6 +15,8 @@ export class ListComponent implements OnInit{
   filtroGenero: string = 'todos';
   filtroProposito: string = 'todos';
   filtroNombre: string = '';
+  imagenUrl!: string; // Recibe la URL de la imagen como entrada
+  showImage = false;
 
   constructor(private ganadoService: GanadoService, private toastr: ToastrService){}
   ngOnInit(){
@@ -78,4 +80,5 @@ export class ListComponent implements OnInit{
       (persona.ganadoID.toLowerCase().includes(this.filtroNombre.toLowerCase()))
     );
   }
+
 }

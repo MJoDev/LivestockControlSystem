@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import {ProductService} from '../../services/product.service';
 import {GanadoService} from '../../services/ganado.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -29,7 +30,15 @@ export class CreateComponent implements OnInit {
   id!: string | null;
   generoSeleccionado: string = '';
   propositoSeleccionado: string = '';
-  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private productoService: ProductService, private aRouter: ActivatedRoute, private ganadoService: GanadoService){
+  fechaMinima!: Date;
+  fechaMaxima!: Date;
+  fechaMedia!: Date;
+  selectedFile: File | null = null;
+  previsualizacion!: string;
+  loadind!: boolean;
+  archivos: any = [];
+
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private productoService: ProductService, private aRouter: ActivatedRoute, private ganadoService: GanadoService, private sanitizer: DomSanitizer){
     this.productForm = this.fb.group({
       _id: [''],
       productID: ['', Validators.required],
@@ -50,8 +59,17 @@ export class CreateComponent implements OnInit {
       litros: [''],
       descripcion: [''],
       salud: [''],
-      destetado: ['']
+      destetado: [''], 
+      imagen: [''], 
+
+
     });
+    this.fechaMaxima = new Date('1900-01-01');
+    this.fechaMedia = new Date();
+
+    // Configura la fecha mínima como hace tres días
+    this.fechaMinima = new Date();
+    this.fechaMinima.setDate(this.fechaMinima.getDate() - 5);
   }
 
   ngOnInit(){
@@ -96,6 +114,7 @@ export class CreateComponent implements OnInit {
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
       litros: this.ganadoForm.get('litros')?.value,
       salud: this.ganadoForm.get('salud')?.value,
+      imagen: this.ganadoForm.get('imagen')?.value
     }
 
     console.log(GANADO);
@@ -130,6 +149,46 @@ export class CreateComponent implements OnInit {
   quitarTipo(){
     this.tipo = false;
   }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.extraerBase64(file).then((imagen:any) => {
+      this.previsualizacion = imagen.base;
+    });
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.ganadoService.uploadImage(formData).subscribe((response) => {
+        this.ganadoForm.patchValue({
+          imagen: response.imageUrl
+        });
+      });
+    }
+  }
   
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+        try{
+          const unsafeImg = window.URL.createObjectURL($event);
+          const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+          const reader = new FileReader();
+          reader.readAsDataURL($event);
+          reader.onload = () => {
+            resolve({
+              base: reader.result
+            }); 
+          }
+          reader.onerror = error => {
+            resolve({
+              base: null
+            });
+          };
+        }catch (e) {
+          console.log(e);
+        }
+      })
+
+     
+      
   }
 

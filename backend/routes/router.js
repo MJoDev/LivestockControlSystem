@@ -3,8 +3,27 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 const ganadoController = require('../controllers/ganadoController');
+const bodyParser = require('body-parser');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
+
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, 'uploads/');
+	},
+	filename: function (req, file, cb) {
+	  cb(null, file.originalname);
+	}
+  });
+
+
+const upload = multer({ storage: storage });
 
 //productos
 router.post('/producto', productController.crearProducto);
@@ -19,6 +38,13 @@ router.get('/ganado', ganadoController.obtenerGanados);
 router.put('/ganado/:id', ganadoController.actualizarGanado);
 router.get('/ganado/:id', ganadoController.obtenerGanado);
 router.delete('/ganado/:id', ganadoController.eliminarGanado);
+
+router.post('/upload', upload.single('file'), (req, res) => {
+	// Manejar la subida de archivos aquí
+	const imageUrl = `http://localhost:4000/api/uploads/${req.file.filename}`;
+	res.json({ imageUrl });
+  });
+  
 
 //usuarios
 router.post('/register', async (req, res) => {
@@ -53,6 +79,10 @@ router.get('/home', verifyToken, async (req, res) => {
     let usuario = await User.findOne({_id})
     res.json({usuario})
 });
+
+router.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public', 'index.html'));
+ });
 
 module.exports = router;
 

@@ -16,6 +16,7 @@ exports.crearGanado = async (req, res) => {
 		descripcion: req.body.descripcion,
 		destetado: req.body.destetado,
 		proposito: req.body.proposito,
+		imagen: req.body.imagen,
 
 		});
 		
@@ -41,7 +42,7 @@ exports.obtenerGanados = async (req, res) =>{
 
 exports.actualizarGanado = async (req, res) => {
 	try{
-		const { ganadoID, salud, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito } = req.body;
+		const { ganadoID, salud, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito, imagen} = req.body;
 		let ganado = await Ganado.findById(req.params.id);
 
 		if(!ganado){
@@ -57,6 +58,7 @@ exports.actualizarGanado = async (req, res) => {
 		ganado.genero = genero;
 		ganado.destetado = destetado;
 		ganado.proposito = proposito;
+		ganado.imagen = imagen;
 
 
 
