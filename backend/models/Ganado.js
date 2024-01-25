@@ -42,6 +42,10 @@ const GanadoSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	ultimoParto: {
+		type: String,
+		required: false,
+	},
 	fechaCreacion: {
 		type: Date,
 		default: Date.now()

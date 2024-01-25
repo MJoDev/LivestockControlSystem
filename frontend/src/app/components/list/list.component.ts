@@ -71,9 +71,6 @@ export class ListComponent implements OnInit{
   }
 
   aplicarFiltro() {
-    // Puedes ajustar esta lógica según tus necesidades
-    // Si el filtro es 'todos', muestra todas las personas
-    // Si no, filtra las personas por género seleccionado
     return this.listGanado.filter(persona => 
       (this.filtroGenero === 'todos' || persona.genero === this.filtroGenero) &&
       (this.filtroProposito === 'todos' || persona.proposito === this.filtroProposito) &&

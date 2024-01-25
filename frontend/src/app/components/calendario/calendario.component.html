@@ -18,7 +18,7 @@
 	        </li>
           <a class="nav-link" routerLink="/productos">Insumos</a>
 		  <a class="nav-link" routerLink="/reportes">Reportes</a>
-		  <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 				Calendario
 			  </a>
@@ -36,9 +36,9 @@
 		<div class="col-lg-8 offset-lg-2">
 			<div class="card">
 				<div class="card-body text-center">
-					<span>Lista de adultos</span> 
+					<span>Lista de ganado</span> 
 					<button class="btn btn-success float-end mb-2" routerLink="/create">Nuevo</button>
-					<input class="form-control me-2" type="text" placeholder="Buscar por ID" [(ngModel)]="filtroID" aria-label="Search"> 
+					<input class="form-control me-2" type="text" placeholder="Buscar por ID" [(ngModel)]="filtroNombre" aria-label="Search"> 
 					<div class="mt-2 mb-2">
 						<label for="Genero">
 							<span>Genero</span>
@@ -58,48 +58,35 @@
 							</select>
 						</label>
 					</div>
-					<table class="table table-dark table-striped table-hover mt-3" *ngIf="listGanado.length > 0">
+					<table class="table table-dark table-striped table-hover" style="overflow-x: auto;" *ngIf="listGanado.length > 0">
 					 	<thead>
 					 		<tr>
 					 			<th>#</th>
 					 			<th>Edad</th>
-					 			<th>Fecha de ingreso</th>
 					 			<th>Fecha de Vacunacion</th>
+					 			<th>Proxima Vacunacion (triple)</th>
 					 			<th>Genero</th>
 					 			<th>Proposito</th>
 					 			<th>Descripcion</th>
-								<th>Salud</th>
-								<th *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">Leche</th>
-					 			<th>Editar/Eliminar</th>	
 					 		</tr>
 					 	</thead>
 					 	<tbody>
 					 		<tr *ngFor="let ganado of aplicarFiltro()">
 					 			<th>{{ ganado.ganadoID }}</th>
 					 			<td>{{ calcularEdad(ganado.fechaDeNacimiento) }}</td>
-					 			<td>{{ ganado.fechaDeIngreso | date:'yyyy-MM-dd' }}</td>
 					 			<td>{{ ganado.fechaDeVacunacion | date:'yyyy-MM-dd' }}</td>
+                                <td>{{  calcularFechaProximaVacuna(ganado) | date:'yyyy-MM-dd' }}</td>
 					 			<td>{{ ganado.genero }}</td>
 					 			<td>{{ ganado.proposito }}</td>
 					 			<td>
-									<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>
-									<div class="icon-container" (mouseover)="showImage=true" (mouseout)="showImage=false">
-									   <i class="fa-solid fa-image"></i>
-									   <div *ngIf="showImage" class="image-overlay">
-										 <img [src]="ganado.imagen" alt="Imagen de {{ ganado.ganadoID }}"  class="imagen-pequena">
-									   </div>
-									 </div>		
-							   </td>
-								<td>
-									<i (click)="saludMostrar(ganado)" class="fa-solid fa-circle-info"></i>		
-							   </td>
-								<td *ngIf="filtroGenero === 'Hembra' && filtroProposito === 'todos' || filtroGenero === 'Hembra' && filtroProposito === 'Ordeño' ">
-									<i (click)="litrosMostrar(ganado)" class="fa-solid fa-circle-info"></i>
+							 		<i (click)="descripcionMostrar(ganado)" class="fa-solid fa-circle-info"></i>
+									 <div class="icon-container" (mouseover)="showImage=true" (mouseout)="showImage=false">
+										<i class="fa-solid fa-image"></i>
+										<div *ngIf="showImage" class="image-overlay">
+										  <img [src]="ganado.imagen" alt="Imagen de {{ ganado.ganadoID }}"  class="imagen-pequena">
+										</div>
+									  </div>		
 								</td>
-					 			<td>
-					 			<i [routerLink]="['/editar-ganado', ganado._id]" class="mx-2 fa-solid fa-pen-to-square"></i>
-					 			<i (click)="eliminarGanado(ganado._id)" class="fa-solid fa-trash"></i>
-					 			</td>
 					 		</tr>
 					 	</tbody>
 					</table>
@@ -108,4 +95,3 @@
 			</div>
 		</div>
 	</div>
-</div>

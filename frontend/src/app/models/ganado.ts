@@ -4,6 +4,7 @@ export class Ganado {
 	fechaDeNacimiento!: string;
 	fechaDeIngreso!: string;
 	fechaDeVacunacion!: string;
+	ultimoParto!: string;
 	proposito!: string;
 	genero!: string;
 	litros!: any;

@@ -13,6 +13,9 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SiginComponent } from './components/sigin/sigin.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { PartosComponent } from './components/partos/partos.component';
+
 
 
 
@@ -33,6 +36,8 @@ const routes: Routes = [
 {path: 'adultos', component: AdultosComponent, canActivate: [AuthGuard]},
 {path: 'editar-ganado/:id', component: EditarGanadoComponent, canActivate: [AuthGuard]},
 {path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard]},
+{path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
+{path: 'partos', component: PartosComponent, canActivate: [AuthGuard]},
 {path: 'signin', component: SiginComponent},
 
 

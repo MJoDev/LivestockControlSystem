@@ -18,6 +18,15 @@
 	        </li>
           <a class="nav-link" routerLink="/productos">Insumos</a>
           <a class="nav-link" routerLink="/reportes">Reportes</a>
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				Calendario
+			  </a>
+			  <ul class="dropdown-menu">
+				<li><a class="dropdown-item" routerLink="/calendario">Vacunacion</a></li>
+				<li><a class="dropdown-item" routerLink="/partos">Partos</a></li>
+			  </ul>
+		  </li>
         </div>
       </div>
     </div>
@@ -86,6 +95,15 @@
 										  <option value="Si">Si</option>
 										  <option value="No">No</option>
 										</select>
+									  </div>
+									  <div class="col-sm-3" *ngIf="generoSeleccionado === 'Hembra'">
+										<mat-form-field>
+										<mat-label>Ultimo Parto</mat-label>
+										<input matInput [matDatepicker]="ultimoParto" formControlName="ultimoParto" [max]="fechaMedia">
+										<mat-hint></mat-hint>
+										<mat-datepicker-toggle matIconSuffix [for]="ultimoParto"></mat-datepicker-toggle>
+										<mat-datepicker #ultimoParto></mat-datepicker>
+									  </mat-form-field>
 									  </div>
 									  <div class="mb-3 text-start">
 										  <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>

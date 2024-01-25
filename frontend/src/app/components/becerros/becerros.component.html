@@ -18,6 +18,15 @@
 	        </li>
           <a class="nav-link" routerLink="/productos">Insumos</a>
 		  <a class="nav-link" routerLink="/reportes">Reportes</a>
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				Calendario
+			  </a>
+			  <ul class="dropdown-menu">
+				<li><a class="dropdown-item" routerLink="/calendario">Vacunacion</a></li>
+				<li><a class="dropdown-item" routerLink="/partos">Partos</a></li>
+			  </ul>
+		  </li>
         </div>
       </div>
     </div>
@@ -89,7 +98,7 @@
 					 		</tr>
 					 	</tbody>
 					</table>
-					<h5 style="text-align: start; margin-top: 10px" *ngIf="listGanado.length == 0">No hay productos para mostrar</h5>
+					<h5 style="text-align: start; margin-top: 10px" *ngIf="listGanado.length == 0">No hay ganado para mostrar</h5>
 				</div>
 			</div>
 		</div>

@@ -56,6 +56,7 @@ export class CreateComponent implements OnInit {
       genero: ['', Validators.required],
       fechaDeVacunacion: ['', Validators.required],
       fechaDeIngreso: ['', Validators.required],
+      ultimoParto: [''],
       litros: [''],
       descripcion: [''],
       salud: [''],
@@ -112,6 +113,7 @@ export class CreateComponent implements OnInit {
       descripcion: this.ganadoForm.get('descripcion')?.value,
       destetado: this.ganadoForm.get('destetado')?.value,
       fechaDeVacunacion: this.ganadoForm.get('fechaDeVacunacion')?.value,
+      ultimoParto: this.ganadoForm.get('ultimoParto')?.value,
       litros: this.ganadoForm.get('litros')?.value,
       salud: this.ganadoForm.get('salud')?.value,
       imagen: this.ganadoForm.get('imagen')?.value

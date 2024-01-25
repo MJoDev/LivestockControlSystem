@@ -12,6 +12,7 @@ exports.crearGanado = async (req, res) => {
 		fechaDeNacimiento: req.body.fechaDeNacimiento,
 		fechaDeIngreso: req.body.fechaDeIngreso,
 		fechaDeVacunacion: req.body.fechaDeVacunacion,
+		ultimoParto: req.body.ultimoParto,
 		genero: req.body.genero,
 		descripcion: req.body.descripcion,
 		destetado: req.body.destetado,
@@ -42,7 +43,7 @@ exports.obtenerGanados = async (req, res) =>{
 
 exports.actualizarGanado = async (req, res) => {
 	try{
-		const { ganadoID, salud, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito, imagen} = req.body;
+		const { ultimoParto, ganadoID, salud, litros, fechaDeNacimiento, fechaDeIngreso, fechaDeVacunacion, genero, descripcion, destetado, proposito, imagen} = req.body;
 		let ganado = await Ganado.findById(req.params.id);
 
 		if(!ganado){
@@ -54,6 +55,7 @@ exports.actualizarGanado = async (req, res) => {
 		ganado.fechaDeNacimiento = fechaDeNacimiento;
 		ganado.fechaDeIngreso = fechaDeIngreso;
 		ganado.fechaDeVacunacion = fechaDeVacunacion;
+		ganado.ultimoParto = ultimoParto;
 		ganado.descripcion = descripcion;
 		ganado.genero = genero;
 		ganado.destetado = destetado;

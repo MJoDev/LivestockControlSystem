@@ -27,6 +27,8 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SiginComponent } from './components/sigin/sigin.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { PartosComponent } from './components/partos/partos.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     InicioComponent,
     RegisterComponent,
     SiginComponent,
-    ReportesComponent
+    ReportesComponent,
+    CalendarioComponent,
+    PartosComponent
   ],
   imports: [
     BrowserModule,

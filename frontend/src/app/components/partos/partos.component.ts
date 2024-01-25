@@ -5,39 +5,39 @@ import { ToastrService } from 'ngx-toastr';
 import { Popover } from 'bootstrap';
 
 @Component({
-  selector: 'app-becerros',
-  templateUrl: './becerros.component.html',
-  styleUrls: ['./becerros.component.css']
+  selector: 'app-partos',
+  templateUrl: './partos.component.html',
+  styleUrls: ['./partos.component.css']
 })
-export class BecerrosComponent {
-   filtroID: string = '';
+export class PartosComponent {
+  filtroID: string = '';
   listGanado: Ganado[] = [];
   filtroGenero: string = 'todos';
   filtroProposito: string = 'todos';
   filtroNombre: string = '';
+  imagenUrl!: string; // Recibe la URL de la imagen como entrada
   showImage = false;
-
 
   constructor(private ganadoService: GanadoService, private toastr: ToastrService){}
   ngOnInit(){
     this.obtenerGanados();
-
-    
   }
   obtenerGanados(){
     this.ganadoService.getGanados().subscribe(data =>{
       console.log(data);
       this.listGanado = data;
-      this.filtrarObjetos();
 
     }, error =>{ console.log(error)});
   }
-  eliminarGanado(id: any){
-    this.ganadoService.eliminarGanado(id).subscribe(data => {
-      this.toastr.error('Ha sido eliminado con exito', 'Elemento Eliminado');
-      this.obtenerGanados();
-    }, error => {console.log(error)});
+
+  aplicarFiltro() {
+    return this.listGanado.filter(persona => (persona.ultimoParto !== undefined && persona.ultimoParto !== null) &&
+      (this.filtroGenero === 'todos' || persona.genero === this.filtroGenero) &&
+      (this.filtroProposito === 'todos' || persona.proposito === this.filtroProposito) &&
+      (persona.ganadoID.toLowerCase().includes(this.filtroNombre.toLowerCase()))
+    );
   }
+
   descripcionMostrar(ganado: any){
     this.toastr.info(ganado.descripcion, 'Descripcion de: ' + ganado.ganadoID , {
       closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
@@ -60,31 +60,12 @@ export class BecerrosComponent {
 
     return edad;
   }
-   filtrarObjetos(): void {
-    this.listGanado = this.listGanado.filter(ganado => {
-      const edad = this.calcularEdad(ganado.fechaDeNacimiento);
-      const matchEdad = /^(\d+) años/.exec(edad);
-
-      if (matchEdad && matchEdad[1]) {
-        return parseInt(matchEdad[1], 10) <= 3;
-      }
-
-      return false;
-      });
+  calcularFechaProximaVacuna(ganado: Ganado): Date {
+    const fechaVacunacion = new Date(ganado.fechaDeVacunacion);
+    
+    // Sumar 6 meses a la fecha 
+    fechaVacunacion.setMonth(fechaVacunacion.getMonth() + 6);
+  
+    return fechaVacunacion;
   }
-
-  saludMostrar(ganado: any){
-    this.toastr.info(ganado.salud, 'Estado de salud: ' + ganado.ganadoID , {
-      closeButton: true, disableTimeOut: true, tapToDismiss: false, positionClass: 'toast-top-right'
-    })
-  }
-
-  aplicarFiltro() {
-    return this.listGanado.filter(persona => 
-      (this.filtroGenero === 'todos' || persona.genero === this.filtroGenero) &&
-      (this.filtroProposito === 'todos' || persona.destetado === this.filtroProposito) &&
-      (persona.ganadoID.toLowerCase().includes(this.filtroNombre.toLowerCase()))
-    );
-  } 
-
 }
